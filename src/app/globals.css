@@ -2,25 +2,138 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --color-primary: #fc6a03;
+  --color-secondary: #ffd600 ;
+  --color-danger: #fe0000;
+}
+
+@theme {
+  --breakpoint-policy: 30rem;
+  --breakpoint-md: 52rem;
+  
+  --color-gd-red: #ad1d00;
+  --color-gd-yellow: #ff972f;
+  --color-gd-red-soft: #ef4b00;
+  --color-gd-yellow-soft: #f6ae34;
+  --color-yellow-p1: #fefcde;
+  --color-yellow-p2: #f5f9b2;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-danger: var(--color-danger);
+  --font-uid: var(--font-uid);
+  --font-opun: var(--font-opun);
+  --font-ic: var(--font-ic);
+  --font-ds: var(--font-ds);
+  --font-pg: var(--font-pg);
 }
 
-@media (prefers-color-scheme: dark) {
+/*TODO: Make theme sync with OS Later zzz
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-ic);
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+#__next {
+  scroll-behavior: smooth;
+}
+
+/*Ty*/
+
+h1 {
+  @apply text-6xl sm:text-7xl md:text-8xl font-bold ;
+}
+
+h2 {
+  @apply text-5xl sm:text-6xl font-bold ;
+}
+
+h3 {
+  @apply text-3xl sm:text-4xl font-bold ;
+}
+
+h4 {
+  @apply text-2xl/5 font-bold ;
+}
+
+p {
+  @apply text-2xl/6 ;
+}
+
+.motto {
+  @apply font-pg text-primary text-xl sm:text-2xl ;
+}
+
+.text-gradient {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-gd-red-soft to-gd-yellow-soft ;
+}
+
+.bg-gd {
+  @apply bg-gradient-to-t from-gd-red-soft to-gd-yellow-soft
+}
+
+.section {
+  @apply h-full flex items-center justify-center text-center scroll-mt-20;
+}
+
+.footer-subtitle {
+  @apply text-xl/5 ;
+}
+
+.footer-text {
+  @apply text-xl ;
+}
+
+.footer-li {
+  @apply flex space-x-2 items-center ;
+}
+
+.footer-copyright {
+  @apply text-base text-white ;
+}
+
+.fc {
+  @apply font-ic text-xs sm:text-base md:text-lg lg:text-xl bg-white rounded-2xl shadow-lg/50 p-6 mb-8 ;
+}
+
+.fc-toolbar-title {
+  @apply text-2xl uppercase ;
+}
+
+.fc-button {
+  background-color: #FC6A03 !important; /* สีปุ่ม Prev, Next, Today */
+  border: none !important;
+  transition: background-color 0.3s ease;
+}
+
+.fc-button:hover {
+  background-color: #FF8C42 !important; /* สี hover ปุ่ม */
+}
+
+.fc-event {
+  background-color: #FC6A03;
+  color: white;
+  border-radius: 0.5rem;
+}
+
+.fc-event:hover {
+  background-color: #ff8c42;
+}
+
+.fc-daygrid-day-number {
+  color: #333; /* ตัวเลขวันที่ */
 }
