@@ -172,7 +172,7 @@ export default function PolicySection() {
                 //TODO: Pointer mouse hover
                 onClick={() => toggleAccordion(index)}
               >
-                ภารกิจที่ {index + 1} "{policy.mission}"
+                ภารกิจที่ {index + 1} &quot;{policy.mission}&quot;
               </h4>
               <ul
                 ref={contentRefs.current[index]}
@@ -205,7 +205,7 @@ export default function PolicySection() {
           </div>
           <div className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <h2 className="text-white text-shadow-lg/100 text-shadow-primary">
-              "Student Bar in Uni"
+              &quot;Student Bar in Uni&quot;
             </h2>
           </div>
           <div className="w-full max-w-xl absolute p-2 bg-black/50 rounded-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-[3.5rem] policy:mt-[4rem] sm:mt-[4.5rem]">

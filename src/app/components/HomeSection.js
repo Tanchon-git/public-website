@@ -38,7 +38,8 @@ export default function HomeSection() {
           </div>
           <div className="pt-10">
             <p className="motto">
-              "คิดด้วยกัน ธรรมด้วยกัน<br></br>เปลี่ยนธรรมศาสตร์ไปด้วยกัน"
+              &quot;คิดด้วยกัน ธรรมด้วยกัน<br></br>
+              เปลี่ยนธรรมศาสตร์ไปด้วยกัน&quot;
             </p>
             <h1 className="text-gradient">พรรคธรรมด้วยกัน</h1>
           </div>
