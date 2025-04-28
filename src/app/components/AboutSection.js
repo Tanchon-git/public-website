@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { UserRoundSearch } from "lucide-react";
 
 //FIXME: เปลี่ยน src รูปแล้วก็ hiperlink
 const images = [
@@ -18,9 +19,12 @@ export default function AboutSection() {
   return (
     <section id="about" className="section bg-gd">
       <div className="max-w-7xl px-4 py-12">
-        <h2 className="text-white text-shadow-md/50">เกี่ยวกับเรา</h2>
+        <div className="section-title">
+          <h2 className="text-white text-shadow-md/50">เกี่ยวกับเรา</h2>
+          <UserRoundSearch size={42} className="text-white" />
+        </div>
 
-        <div className="flex flex-col gap-4 mt-4 mb-8">
+        <div className="flex flex-col gap-4 my-8">
           {images.map((image, index) => (
             <div key={index} className="relative overflow-hidden rounded-2xl">
               <a href={image.href} target="_blank">
@@ -38,7 +42,7 @@ export default function AboutSection() {
             </div>
           ))}
         </div>
-
+        {/*TODO: edit hyperlink*/}
         <a
           target="_blank"
           href="https://www.instagram.com/unitedtu.party?igsh=MXl4eG1kenFoYW14"

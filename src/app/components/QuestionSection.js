@@ -1,3 +1,5 @@
+import { MessageCircleQuestion } from "lucide-react";
+
 const lists = [
   {
     question: "Supporter คืออะไร",
@@ -25,7 +27,10 @@ export default function QuestionSection() {
   return (
     <section id="about" className="section bg-yellow-p1">
       <div className="max-w-7xl px-4 py-12">
-        <h2 className="text-gradient">คำถามที่พบบ่อย ?</h2>
+        <div className="section-title">
+          <h2 className="text-gradient">คำถามที่พบบ่อย</h2>
+          <MessageCircleQuestion size={42} />
+        </div>
         <div className="divide-y-1 divide-primary max-w-5xl">
           {lists.map((list, index) => (
             <div key={index} className="py-4">

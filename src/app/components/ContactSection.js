@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { PhoneCall } from "lucide-react";
 
 const images = [
   {
@@ -17,9 +18,12 @@ export default function ContactSection() {
   return (
     <section id="contact" className="section bg-zinc-100">
       <div className="max-w-7xl px-4 py-12">
-        <div className="pb-4">
+        <div className="mb-4">
           <p>มีคำถามเพิ่มเติม ?</p>
-          <h2 className="text-gradient pb-4">ติดต่อเรา</h2>
+          <div className="section-title mb-6">
+            <h2 className="text-gradient">ติดต่อเรา</h2>
+            <PhoneCall size={42} />
+          </div>
           <p className="font-bold">
             ต้องการติดตามข่าวสารต่าง ๆ สามารถติดตามเราได้ผ่านช่องทางด้านล่าง
             หรือหากต้องการแจ้งปัญหาที่พบภายในมหาวิทยาลัยเรายินดีช่วยเหลือเพื่อนนักศึกษาทุกคน

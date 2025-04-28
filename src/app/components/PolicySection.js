@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { ScrollText } from "lucide-react";
 
 const policies = [
   {
@@ -148,55 +149,63 @@ export default function PolicySection() {
   return (
     <section id="policy" className="section bg-yellow-p1">
       <div className="max-w-7xl px-4 py-12">
-        <div className="mb-6">
-          <h2 className="text-gradient">นโยบายของเรา</h2>
+        <div className="mb-8">
+          <div className="section-title">
+            <h2 className="text-gradient">นโยบายของเรา</h2>
+            <ScrollText size={42} />
+          </div>
           <h3 className="bg-gd p-1 rounded-2xl text-white">
             9 ภารกิจ 1 ความฝัน
           </h3>
         </div>
 
         <div>
-          {policies.map((policy, index) => (
-            <div
-              key={index}
-              className={`transition-all duration-300 ease-in-out ${
-                openIndex === index ? "mb-6" : "mb-0"
-              }`}
-            >
-              <h4
-                className={`p-3 italic transition-all duration-300 ease-in-out ${
-                  openIndex === index
-                    ? "text-white bg-gd rounded-t-2xl"
-                    : "text-primary bg-white rounded-2xl shadow-md/50"
+          {policies.map(
+            (
+              policy,
+              index //#FIXME: Error animation in IOS && The first re-render bug animation
+            ) => (
+              <div
+                key={index}
+                className={`transition-all duration-300 ease-in-out ${
+                  openIndex === index ? "mb-6" : "mb-0"
                 }`}
-                //TODO: Pointer mouse hover
-                onClick={() => toggleAccordion(index)}
               >
-                ภารกิจที่ {index + 1} &quot;{policy.mission}&quot;
-              </h4>
-              <ul
-                ref={contentRefs.current[index]}
-                className={`p-3 bg-white rounded-b-2xl shadow-lg/50 transition-all duration-300 ease-in-out overflow-hidden ${
-                  openIndex === index
-                    ? "max-h-[1000px] opacity-100 "
-                    : "max-h-0 opacity-0 pointer-events-none"
-                }`}
-                style={{
-                  maxHeight:
-                    openIndex === index &&
-                    contentRefs.current[index]?.current?.scrollHeight
-                      ? `${contentRefs.current[index].current.scrollHeight}px`
-                      : 0,
-                }}
-              >
-                {policy.section.map((item, itemIndex) => (
-                  <li key={itemIndex} className="text-2xl text-left">
-                    {itemIndex + 1}. {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                <h4
+                  className={`p-3 italic transition-all duration-300 ease-in-out ${
+                    openIndex === index
+                      ? "text-white bg-gd rounded-t-2xl"
+                      : "text-primary bg-white rounded-2xl shadow-md/50"
+                  }`}
+                  //TODO: Pointer mouse hover
+                  onClick={() => toggleAccordion(index)}
+                >
+                  ภารกิจที่ {index + 1} &quot;{policy.mission}&quot;
+                </h4>
+                <ul
+                  ref={contentRefs.current[index]}
+                  className={`p-3 bg-white rounded-b-2xl shadow-lg/50 transition-all duration-300 ease-in-out overflow-hidden ${
+                    openIndex === index
+                      ? "max-h-[1000px] opacity-100 "
+                      : "max-h-0 opacity-0 pointer-events-none"
+                  }`}
+                  style={{
+                    maxHeight:
+                      openIndex === index &&
+                      contentRefs.current[index]?.current?.scrollHeight
+                        ? `${contentRefs.current[index].current.scrollHeight}px`
+                        : 0,
+                  }}
+                >
+                  {policy.section.map((item, itemIndex) => (
+                    <li key={itemIndex} className="text-2xl text-left">
+                      {itemIndex + 1}. {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          )}
         </div>
 
         <div className="relative w-full rounded-4xl overflow-hidden flex flex-col items-center">

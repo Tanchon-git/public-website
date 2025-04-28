@@ -44,16 +44,6 @@ body {
   scroll-behavior: smooth;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-#__next {
-  scroll-behavior: smooth;
-}
-
-/*Ty*/
-
 h1 {
   @apply text-6xl sm:text-7xl md:text-8xl font-bold ;
 }
@@ -88,6 +78,10 @@ p {
 
 .section {
   @apply h-full flex items-center justify-center text-center scroll-mt-20;
+}
+
+.section-title {
+  @apply flex justify-center items-center gap-2 text-primary
 }
 
 .footer-subtitle {
@@ -136,4 +130,12 @@ p {
 
 .fc-daygrid-day-number {
   color: #333; /* ตัวเลขวันที่ */
+}
+
+.card-event-title {
+  @apply mb-4 p-2 bg-white rounded-2xl inset-shadow-sm/70;
+}
+
+.card-event-ul {
+  @apply flex flex-col md:flex-row md:justify-center gap-4 ;
 }
