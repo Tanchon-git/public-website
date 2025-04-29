@@ -1,15 +1,14 @@
 import Image from "next/image";
 import { UserRoundSearch } from "lucide-react";
 
-//FIXME: เปลี่ยน src รูปแล้วก็ hiperlink
 const images = [
   {
     src: "/about/about.jpg",
     title: "ความเป็นมาของพรรค",
-    href: "https://www.instagram.com/unitedtu.party?igsh=MXl4eG1kenFoYW14",
+    href: "https://www.instagram.com/p/C3U-kkfPKaL/?img_index=1&igsh=dXhrNnZ4cGd6Ym5t",
   },
   {
-    src: "/about/about.jpg",
+    src: "/about/about2.jpg",
     title: "สมาชิกพรรค",
     href: "https://www.instagram.com/unitedtu.party?igsh=MXl4eG1kenFoYW14",
   },
@@ -43,13 +42,13 @@ export default function AboutSection() {
           ))}
         </div>
         {/*TODO: edit hyperlink*/}
-        <a
+        {/* <a
           target="_blank"
           href="https://www.instagram.com/unitedtu.party?igsh=MXl4eG1kenFoYW14"
           className="text-primary text-2xl font-bold p-3 bg-white rounded-2xl shadow-md/50"
         >
           ร่วมเป็น Supporter พรรคธรรมด้วยกัน
-        </a>
+        </a> */}
       </div>
     </section>
   );

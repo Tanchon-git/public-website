@@ -1,5 +1,5 @@
 "use client";
-//FIXME: Can't use in production mobile view && if word too much word disapear
+//FIXME: Can't use in production mobile view
 import { useState, useEffect, useRef } from "react";
 import cloud from "d3-cloud";
 import * as d3 from "d3";

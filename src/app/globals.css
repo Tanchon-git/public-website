@@ -9,7 +9,7 @@
 
 @theme {
   --breakpoint-policy: 30rem;
-  --breakpoint-md: 52rem;
+  --breakpoint-md: 61.5rem;
   
   --color-gd-red: #ad1d00;
   --color-gd-yellow: #ff972f;
@@ -142,4 +142,20 @@ p {
 
 .card-event-ul {
   @apply flex flex-col md:flex-row md:justify-center md:items-stretch items-center  gap-4 ;
+}
+
+.report-form {
+  @apply bg-zinc-50 shadow-xl rounded-2xl p-6 space-y-5 border border-primary ;
+}
+
+.report-title {
+  @apply block text-2xl font-semibold text-zinc-800 mb-1 ;
+}
+
+.report-input {
+  @apply w-full p-3 text-xl rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-primary ;
+}
+
+.report-button {
+  @apply bg-primary text-white px-6 py-3 text-xl rounded-xl font-bold hover:bg-orange-400 cursor-pointer transition-all duration-300 ;
 }
