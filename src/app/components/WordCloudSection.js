@@ -9,6 +9,7 @@ export default function WordCloudSection() {
   const [input, setInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const svgRef = useRef(null);
+  const canvasRef = useRef(null);
 
   const fetchWords = async () => {
     const res = await fetch("/api/wordcloud");
@@ -47,47 +48,88 @@ export default function WordCloudSection() {
     fetchWords();
   };
 
+  // useEffect(() => {
+  //   if (!words.length) return;
+
+  //   const layout = cloud()
+  //     .size([600, 400])
+  //     .words(words)
+  //     .padding(5)
+  //     .rotate(() => (Math.random() > 0.5 ? 0 : 90))
+  //     .font("DSFont")
+  //     .fontSize((d) => d.value * 30)
+  //     .on("end", draw);
+
+  //   layout.start();
+
+  //   function draw(words) {
+  //     const svg = d3.select(svgRef.current);
+  //     svg.selectAll("*").remove();
+  //     svg
+  //       .attr("viewBox", "-300 -200 600 400")
+  //       .append("g")
+  //       .selectAll("text")
+  //       .data(words)
+  //       .join("text")
+  //       .style("font-family", "DSFont, Arial, sans-serif")
+  //       .style(
+  //         "fill",
+  //         () => d3.schemeCategory10[Math.floor(Math.random() * 10)]
+  //       )
+  //       .attr("text-anchor", "middle")
+  //       .attr(
+  //         "transform",
+  //         (d) => `translate(${d.x},${d.y}) rotate(${d.rotate})`
+  //       )
+  //       .style("font-size", (d) => `${d.size}px`)
+  //       .text((d) => d.text);
+  //   }
+  // }, [words]);
+
   useEffect(() => {
     if (!words.length) return;
 
-    const layout = cloud()
-      .size([600, 400])
-      .words(words)
-      .padding(5)
-      .rotate(() => (Math.random() > 0.5 ? 0 : 90))
-      .font("DSFont")
-      .fontSize((d) => d.value * 30)
-      .on("end", draw);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const width = canvas.width;
+    const height = canvas.height;
 
-    layout.start();
+    ctx.clearRect(0, 0, width, height);
 
-    function draw(words) {
-      const svg = d3.select(svgRef.current);
-      svg.selectAll("*").remove();
-      svg
-        .attr("viewBox", "-300 -200 600 400")
-        .append("g")
-        .selectAll("text")
-        .data(words)
-        .join("text")
-        .style("font-family", "Arial, sans-serif")
-        .style(
-          "fill",
-          () => d3.schemeCategory10[Math.floor(Math.random() * 10)]
-        )
-        .attr("text-anchor", "middle")
-        .attr(
-          "transform",
-          (d) => `translate(${d.x},${d.y}) rotate(${d.rotate})`
-        )
-        .style("font-size", (d) => `${d.size}px`)
-        .text((d) => d.text);
-    }
+    words.forEach((word) => {
+      const fontSize = word.value * 10 + 10;
+      ctx.font = `${fontSize}px Arial`;
+      ctx.fillStyle = getRandomColor();
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const x = Math.random() * width;
+      const y = Math.random() * height;
+      const angle = (Math.random() > 0.5 ? 0 : 90) * (Math.PI / 180);
+
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      ctx.fillText(word.text, 0, 0);
+      ctx.restore();
+    });
   }, [words]);
 
   useEffect(() => {
     fetchWords();
   }, []);
+
+  function getRandomColor() {
+    const colors = [
+      "#F97316", // orange
+      "#2563EB", // blue
+      "#10B981", // green
+      "#9333EA", // purple
+      "#EF4444", // red
+      "#0EA5E9", // sky blue
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
 
   return (
     <section id="event" className="section bg-white ">
@@ -125,7 +167,8 @@ export default function WordCloudSection() {
         </form>
 
         <div className="flex justify-center">
-          <svg ref={svgRef} className="max-w-7xl" />
+          {/* <svg ref={svgRef} className="max-w-7xl" /> */}
+          <canvas ref={canvasRef} width={600} height={400} />
         </div>
       </div>
     </section>
