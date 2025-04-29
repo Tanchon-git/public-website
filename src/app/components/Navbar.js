@@ -14,8 +14,8 @@ const navItems = [
     name: "ร้องเรียนปัญหา",
     dropdown: [
       { name: "ทั่วไป", href: "/report/general" },
-      // { name: "ขนส่งภายใน", href: "/report/transport" },
-      // { name: "Lost and Found", href: "/report/lostfound" },
+      { name: "ขนส่งภายใน", href: "/report/transport" },
+      { name: "Lost and Found", href: "/report/lostfound" },
     ],
   },
   { name: "ติดต่อเรา", href: "/#contact" },

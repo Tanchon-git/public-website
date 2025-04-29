@@ -4,16 +4,22 @@ import { useState } from "react";
 
 export default function Page() {
   const [form, setForm] = useState({
-    title: "",
+    title: "ของฉันหาย",
     detail: "",
     email: "",
     phone: "",
   });
 
+  const [images, setImages] = useState([]);
   const [status, setStatus] = useState(null);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImages(files);
   };
 
   const handleSubmit = async (e) => {
@@ -30,17 +36,30 @@ export default function Page() {
       return;
     }
 
+    if (images.length < 2) {
+      setStatus("กรุณาอัปโหลดรูปภาพอย่างน้อย 2 รูป");
+      return;
+    }
+
+    const data = new FormData();
+    data.append("title", form.title);
+    data.append("detail", form.detail);
+    data.append("email", form.email);
+    data.append("phone", form.phone);
+    images.forEach((file) => {
+      data.append("images", file);
+    });
+
     try {
-      const res = await fetch("/api/report/general", {
+      const res = await fetch("/api/report/lostfound", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: data,
       });
 
       if (res.ok) {
         setStatus("ส่งข้อมูลเรียบร้อยแล้ว ทางเราจะรีบติดต่อกลับโดยเร็ว");
-        console.log(form);
-        setForm({ title: "", detail: "", email: "", phone: "" });
+        setForm({ title: "ของฉันหาย", detail: "", email: "", phone: "" });
+        setImages([]);
       } else {
         setStatus("เกิดข้อผิดพลาดในการส่งข้อมูล");
       }
@@ -54,21 +73,22 @@ export default function Page() {
       <section className="min-h-screen bg-white px-6 pt-30">
         <div className="max-w-2xl mx-auto">
           <div className="section-title mb-8">
-            <h1 className="text-gradient">แจ้งปัญหาทั่วไป</h1>
+            <h1 className="text-gradient">ของหายได้คืน</h1>
           </div>
 
           <form onSubmit={handleSubmit} className="report-form">
             <div>
               <label className="report-title">หัวข้อที่ต้องการร้องเรียน</label>
-              <input
-                type="text"
+              <select
                 name="title"
                 value={form.title}
                 onChange={handleChange}
-                required
                 className="report-input"
-                placeholder="เช่น ปัญหาไฟฟ้าดับ อาคารเรียน..."
-              />
+                required
+              >
+                <option value="ของฉันหาย">ของฉันหาย</option>
+                <option value="ตามหาเจ้าของ">ตามหาเจ้าของ</option>
+              </select>
             </div>
 
             <div>
@@ -80,7 +100,32 @@ export default function Page() {
                 required
                 rows="5"
                 className="report-input resize-none"
-                placeholder="อธิบายรายละเอียดปัญหาที่พบ"
+                placeholder="อธิบายประเภท ลักษณะหรือตำหนิ"
+              />
+            </div>
+
+            <div>
+              <label className="report-title block mb-2">
+                แนบรูปภาพสิ่งของ (อย่างน้อย 2 รูปในมุมที่แตกต่างกัน)
+              </label>
+
+              <div className="flex items-center space-x-4">
+                <label
+                  htmlFor="imageUpload"
+                  className="cursor-pointer inline-flex items-center px-4 py-2 bg-primary text-white font-medium rounded-lg shadow hover:bg-orange-400 transition"
+                >
+                  📷 เพิ่มรูปภาพ
+                </label>
+                <span className="text-gray-600">{images.length} รูป</span>
+              </div>
+
+              <input
+                id="imageUpload"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleFileChange}
+                className="hidden"
               />
             </div>
 

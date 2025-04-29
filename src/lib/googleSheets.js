@@ -62,3 +62,59 @@ export async function getWords() {
     value: parseInt(count),
   }));
 }
+
+export async function saveGeneralReport({ title, detail, email, phone }) {
+  const sheetId = process.env.GOOGLE_SHEET_ID;
+
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: sheetId,
+    range: "general report!A:D", // ตรวจสอบให้ชื่อ Sheet ภายใน Google Sheet ตรงกับนี้
+    valueInputOption: "USER_ENTERED",
+    insertDataOption: "INSERT_ROWS",
+    requestBody: {
+      values: [[title, detail, email, phone]],
+    },
+  });
+}
+
+export async function saveTransportReport({
+  title,
+  detail,
+  vehicleId,
+  email,
+  phone,
+}) {
+  const sheetId = process.env.GOOGLE_SHEET_ID;
+
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: sheetId,
+    range: "transport report!A:D", // ตรวจสอบให้ชื่อ Sheet ภายใน Google Sheet ตรงกับนี้
+    valueInputOption: "USER_ENTERED",
+    insertDataOption: "INSERT_ROWS",
+    requestBody: {
+      values: [[title, detail, vehicleId, email, phone]],
+    },
+  });
+}
+
+export async function saveLostfoundReport({
+  title,
+  detail,
+  email,
+  phone,
+  imageUrls,
+}) {
+  const sheetId = process.env.GOOGLE_SHEET_ID;
+
+  const imageFormulas = imageUrls.map((url) => `=IMAGE("${url}")`);
+
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: sheetId,
+    range: "lostfound report!A:D", // ตรวจสอบให้ชื่อ Sheet ภายใน Google Sheet ตรงกับนี้
+    valueInputOption: "USER_ENTERED",
+    insertDataOption: "INSERT_ROWS",
+    requestBody: {
+      values: [[title, detail, email, phone, ...imageFormulas]],
+    },
+  });
+}

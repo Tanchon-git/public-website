@@ -4,8 +4,9 @@ import { useState } from "react";
 
 export default function Page() {
   const [form, setForm] = useState({
-    title: "",
+    title: "วินมอเตอร์ไซค์",
     detail: "",
+    vehicleId: "",
     email: "",
     phone: "",
   });
@@ -31,7 +32,7 @@ export default function Page() {
     }
 
     try {
-      const res = await fetch("/api/report/general", {
+      const res = await fetch("/api/report/transport", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -40,7 +41,13 @@ export default function Page() {
       if (res.ok) {
         setStatus("ส่งข้อมูลเรียบร้อยแล้ว ทางเราจะรีบติดต่อกลับโดยเร็ว");
         console.log(form);
-        setForm({ title: "", detail: "", email: "", phone: "" });
+        setForm({
+          title: "วินมอเตอร์ไซค์",
+          detail: "",
+          vehicleId: "",
+          email: "",
+          phone: "",
+        });
       } else {
         setStatus("เกิดข้อผิดพลาดในการส่งข้อมูล");
       }
@@ -52,22 +59,38 @@ export default function Page() {
   return (
     <div>
       <section className="min-h-screen bg-white px-6 pt-30">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <div className="section-title mb-8">
-            <h1 className="text-gradient">แจ้งปัญหาทั่วไป</h1>
+            <h1 className="text-gradient">แจ้งปัญหาขนส่งภายใน</h1>
           </div>
 
           <form onSubmit={handleSubmit} className="report-form">
             <div>
               <label className="report-title">หัวข้อที่ต้องการร้องเรียน</label>
-              <input
-                type="text"
+              <select
                 name="title"
                 value={form.title}
                 onChange={handleChange}
-                required
                 className="report-input"
-                placeholder="เช่น ปัญหาไฟฟ้าดับ อาคารเรียน..."
+                required
+              >
+                <option value="วินมอเตอร์ไซค์">วินมอเตอร์ไซค์</option>
+                <option value="รถ EV">รถ EV</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="report-title">
+                ป้ายทะเบียนรถ หรือ หมายเลขคนขับ
+              </label>
+              <input
+                type="text"
+                name="vehicleId"
+                value={form.vehicleId}
+                onChange={handleChange}
+                className="report-input"
+                placeholder="เช่น กข1234 หรือ หมายเลข 07"
+                required
               />
             </div>
 
