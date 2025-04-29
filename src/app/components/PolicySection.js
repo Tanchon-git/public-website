@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { ScrollText } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const policies = [
   {
@@ -159,7 +160,7 @@ export default function PolicySection() {
           </h3>
         </div>
 
-        <div>
+        <div className="mb-8">
           {policies.map(
             (
               policy,
@@ -167,12 +168,10 @@ export default function PolicySection() {
             ) => (
               <div
                 key={index}
-                className={`transition-all duration-300 ease-in-out ${
-                  openIndex === index ? "mb-6" : "mb-0"
-                }`}
+                className="transition-all duration-400 ease-in-out mb-4"
               >
                 <h4
-                  className={`p-3 italic transition-all duration-300 ease-in-out ${
+                  className={`p-3 italic cursor-pointer transition-all duration-300 ease-in-out ${
                     openIndex === index
                       ? "text-white bg-gd rounded-t-2xl"
                       : "text-primary bg-white rounded-2xl shadow-md/50"
@@ -182,27 +181,24 @@ export default function PolicySection() {
                 >
                   ภารกิจที่ {index + 1} &quot;{policy.mission}&quot;
                 </h4>
-                <ul
-                  ref={contentRefs.current[index]}
-                  className={`p-3 bg-white rounded-b-2xl shadow-lg/50 transition-all duration-300 ease-in-out overflow-hidden ${
-                    openIndex === index
-                      ? "max-h-[1000px] opacity-100 "
-                      : "max-h-0 opacity-0 pointer-events-none"
-                  }`}
-                  style={{
-                    maxHeight:
-                      openIndex === index &&
-                      contentRefs.current[index]?.current?.scrollHeight
-                        ? `${contentRefs.current[index].current.scrollHeight}px`
-                        : 0,
-                  }}
-                >
-                  {policy.section.map((item, itemIndex) => (
-                    <li key={itemIndex} className="text-2xl text-left">
-                      {itemIndex + 1}. {item}
-                    </li>
-                  ))}
-                </ul>
+
+                <AnimatePresence initial={false}>
+                  {openIndex === index && (
+                    <motion.ul
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 1 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="p-3 bg-white rounded-b-2xl shadow-lg/50 overflow-hidden"
+                    >
+                      {policy.section.map((item, itemIndex) => (
+                        <li key={itemIndex} className="text-2xl text-left">
+                          {itemIndex + 1}. {item}
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
               </div>
             )
           )}

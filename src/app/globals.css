@@ -41,6 +41,10 @@
 
 body {
   font-family: var(--font-ic);
+  
+}
+
+html {
   scroll-behavior: smooth;
 }
 
