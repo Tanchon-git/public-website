@@ -164,16 +164,15 @@ export default function PolicySection() {
           {policies.map(
             (
               policy,
-              index //#FIXME: Error animation in IOS && The first re-render bug animation
+              index //#FIXME: Error animation in IOS
             ) => (
               <div key={index} className="mb-4">
                 <h4
-                  className={`p-3 italic cursor-pointer rounded-t-2xl transition-color duration-300 ease-in-out ${
+                  className={`p-3 italic cursor-pointer transition-all duration-300 ease-in-out ${
                     openIndex === index
-                      ? "text-white bg-gd "
-                      : "text-primary bg-white shadow-md/50"
+                      ? "text-white rounded-t-2xl bg-gd "
+                      : "text-primary rounded-2xl bg-white shadow-md/50"
                   }`}
-                  //TODO: Pointer mouse hover
                   onClick={() => toggleAccordion(index)}
                 >
                   ภารกิจที่ {index + 1} &quot;{policy.mission}&quot;
@@ -186,7 +185,7 @@ export default function PolicySection() {
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 1 }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="p-3 bg-white rounded-b-2xl shadow-lg/50 overflow-hidden"
+                      className="px-3 bg-white rounded-b-2xl shadow-lg/50 overflow-hidden"
                     >
                       {policy.section.map((item, itemIndex) => (
                         <li key={itemIndex} className="text-2xl text-left">
