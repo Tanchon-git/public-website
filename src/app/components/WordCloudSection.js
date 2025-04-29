@@ -1,5 +1,5 @@
 "use client";
-//FIXME: Can't use in production mobile view
+//FIXME: Can't use in production IOS view
 import { useState, useEffect, useRef } from "react";
 import cloud from "d3-cloud";
 import * as d3 from "d3";
@@ -51,7 +51,7 @@ export default function WordCloudSection() {
     if (!words.length) return;
 
     const layout = cloud()
-      .size([300, 300])
+      .size([600, 400])
       .words(words)
       .padding(5)
       .rotate(() => (Math.random() > 0.5 ? 0 : 90))
@@ -70,7 +70,7 @@ export default function WordCloudSection() {
         .selectAll("text")
         .data(words)
         .join("text")
-        .style("font-family", "DSFont")
+        .style("font-family", "Arial, sans-serif")
         .style(
           "fill",
           () => d3.schemeCategory10[Math.floor(Math.random() * 10)]
