@@ -51,7 +51,7 @@ export default function WordCloudSection() {
     if (!words.length) return;
 
     const layout = cloud()
-      .size([600, 400])
+      .size([400, 600])
       .words(words)
       .padding(5)
       .rotate(() => (Math.random() > 0.5 ? 0 : 90))
