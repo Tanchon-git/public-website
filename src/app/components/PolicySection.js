@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import Image from "next/image";
-import { ScrollText } from "lucide-react";
+import { ScrollText, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const policies = [
   {
@@ -168,14 +168,17 @@ export default function PolicySection() {
             ) => (
               <div key={index} className="mb-4">
                 <h4
-                  className={`p-3 italic cursor-pointer transition-all duration-300 ease-in-out ${
+                  className={`p-3 italic cursor-pointer flex items-center justify-between transition-all duration-300 ease-in-out ${
                     openIndex === index
                       ? "text-white rounded-t-2xl bg-gd "
                       : "text-primary rounded-2xl bg-white shadow-md/50"
                   }`}
                   onClick={() => toggleAccordion(index)}
                 >
-                  ภารกิจที่ {index + 1} &quot;{policy.mission}&quot;
+                  <span>
+                    ภารกิจที่ {index + 1} &quot;{policy.mission}&quot;
+                  </span>
+                  {openIndex === index ? <ChevronUp /> : <ChevronDown />}
                 </h4>
 
                 <AnimatePresence initial={false}>

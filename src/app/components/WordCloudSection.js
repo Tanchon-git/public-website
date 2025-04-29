@@ -7,28 +7,44 @@ import * as d3 from "d3";
 export default function WordCloudSection() {
   const [words, setWords] = useState([]);
   const [input, setInput] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const svgRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  const fetchWords = async () => {
+    const res = await fetch("/api/wordcloud");
+    const data = await res.json();
+
+    const formatted = data.map((word) => ({
+      text: word.text,
+      value: parseInt(word.value || "1", 10),
+    }));
+    setWords(formatted);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (input.trim()) {
-      const inputWords = input.trim().split(/\s+/);
-      setWords((prevWords) => {
-        const updatedWords = [...prevWords];
-        inputWords.forEach((word) => {
-          const existingWord = updatedWords.find(
-            (w) => w.text.toLowerCase() === word.toLowerCase()
-          );
-          if (existingWord) {
-            existingWord.value += 20; // เพิ่มความใหญ่ถ้าคำนี้มีอยู่แล้ว
-          } else {
-            updatedWords.push({ text: word, value: 30 }); // ค่าเริ่มต้นสำหรับคำใหม่
-          }
-        });
-        return updatedWords;
-      });
-      setInput("");
+    setErrorMessage("");
+
+    if (!input.trim()) return;
+
+    const res = await fetch("/api/wordcloud", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ word: input.trim() }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      if (data?.error) {
+        setErrorMessage(data?.error);
+      } else {
+        setErrorMessage("เกิดข้อผิดพลาด ไม่สามารถเพิ่มคำได้");
+      }
+      return;
     }
+
+    setInput("");
+    fetchWords();
   };
 
   useEffect(() => {
@@ -40,7 +56,7 @@ export default function WordCloudSection() {
       .padding(5)
       .rotate(() => (Math.random() > 0.5 ? 0 : 90))
       .font("DSFont")
-      .fontSize((d) => d.value)
+      .fontSize((d) => d.value * 30)
       .on("end", draw);
 
     layout.start();
@@ -69,25 +85,37 @@ export default function WordCloudSection() {
     }
   }, [words]);
 
+  useEffect(() => {
+    fetchWords();
+  }, []);
+
   return (
     <section id="event" className="section bg-white ">
       <div className="max-w-7xl px-4 py-12 text-center space-y-6">
         <h2 className="text-gradient">
-          ขอ 1 คำ<br></br>
+          ขอ 1 คำ
+          <br />
           ประเด็นที่อยากให้ธรรมด้วยกันเพื่อชาวธรรมศาสตร์
         </h2>
 
         <form
           onSubmit={handleSubmit}
-          className="text-xl sm:text-2xl flex flex-col md:flex-row gap-2 md:gap-4 justify-center"
+          className="text-xl sm:text-2xl gap-2 md:gap-4 flex flex-col md:flex-row justify-center"
         >
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="พิมพ์คำที่คุณอยากแชร์..."
-            className="p-3 rounded-2xl border-2 border-primary w-full md:w-96"
-          />
+          <div>
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="พิมพ์คำที่คุณอยากแชร์..."
+              className={`p-3 rounded-2xl border-2 w-full md:w-96 ${
+                errorMessage.length > 0 ? "border-red-600" : "border-primary"
+              }`}
+            />
+            {errorMessage && (
+              <p className="text-red-600 mt-2">{errorMessage}</p>
+            )}
+          </div>
           <button
             type="submit"
             className="p-1 md:p-3 bg-primary text-white rounded-2xl hover:bg-orange-400 shadow-md/50 transition"
