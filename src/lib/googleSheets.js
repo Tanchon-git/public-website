@@ -1,17 +1,16 @@
 import { google } from "googleapis";
 import { JWT } from "google-auth-library";
-import credentials from "../../db-service-key.json";
 
 const auth = new JWT({
-  email: credentials.client_email,
-  key: credentials.private_key,
+  email: process.env.GOOGLE_CLIENT_EMAIL,
+  key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
   scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
 const sheets = google.sheets({ version: "v4", auth });
 
 export async function saveOrUpdateWord(word) {
-  const sheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+  const sheetId = process.env.GOOGLE_SHEET_ID;
 
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: sheetId,
@@ -51,7 +50,7 @@ export async function saveOrUpdateWord(word) {
 }
 
 export async function getWords() {
-  const sheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+  const sheetId = process.env.GOOGLE_SHEET_ID;
 
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: sheetId,
