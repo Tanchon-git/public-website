@@ -166,15 +166,12 @@ export default function PolicySection() {
               policy,
               index //#FIXME: Error animation in IOS && The first re-render bug animation
             ) => (
-              <div
-                key={index}
-                className="transition-all duration-400 ease-in-out mb-4"
-              >
+              <div key={index} className="mb-4">
                 <h4
-                  className={`p-3 italic cursor-pointer transition-all duration-300 ease-in-out ${
+                  className={`p-3 italic cursor-pointer rounded-t-2xl transition-color duration-300 ease-in-out ${
                     openIndex === index
-                      ? "text-white bg-gd rounded-t-2xl"
-                      : "text-primary bg-white rounded-2xl shadow-md/50"
+                      ? "text-white bg-gd "
+                      : "text-primary bg-white shadow-md/50"
                   }`}
                   //TODO: Pointer mouse hover
                   onClick={() => toggleAccordion(index)}
