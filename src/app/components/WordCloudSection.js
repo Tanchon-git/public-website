@@ -1,14 +1,10 @@
 "use client";
-//FIXME: Can't use in production IOS view
 import { useState, useEffect, useRef } from "react";
-import cloud from "d3-cloud";
-import * as d3 from "d3";
 
 export default function WordCloudSection() {
   const [words, setWords] = useState([]);
   const [input, setInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const svgRef = useRef(null);
   const canvasRef = useRef(null);
 
   const fetchWords = async () => {
@@ -48,75 +44,74 @@ export default function WordCloudSection() {
     fetchWords();
   };
 
-  // useEffect(() => {
-  //   if (!words.length) return;
-
-  //   const layout = cloud()
-  //     .size([600, 400])
-  //     .words(words)
-  //     .padding(5)
-  //     .rotate(() => (Math.random() > 0.5 ? 0 : 90))
-  //     .font("DSFont")
-  //     .fontSize((d) => d.value * 30)
-  //     .on("end", draw);
-
-  //   layout.start();
-
-  //   function draw(words) {
-  //     const svg = d3.select(svgRef.current);
-  //     svg.selectAll("*").remove();
-  //     svg
-  //       .attr("viewBox", "-300 -200 600 400")
-  //       .append("g")
-  //       .selectAll("text")
-  //       .data(words)
-  //       .join("text")
-  //       .style("font-family", "DSFont, Arial, sans-serif")
-  //       .style(
-  //         "fill",
-  //         () => d3.schemeCategory10[Math.floor(Math.random() * 10)]
-  //       )
-  //       .attr("text-anchor", "middle")
-  //       .attr(
-  //         "transform",
-  //         (d) => `translate(${d.x},${d.y}) rotate(${d.rotate})`
-  //       )
-  //       .style("font-size", (d) => `${d.size}px`)
-  //       .text((d) => d.text);
-  //   }
-  // }, [words]);
-
   useEffect(() => {
-    if (!words.length) return;
-
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    const width = canvas.width;
-    const height = canvas.height;
+    if (!canvas || !words.length) return;
 
-    ctx.clearRect(0, 0, width, height);
+    const ctx = canvas.getContext("2d");
+    const containerWidth = window.innerWidth;
+    const canvasWidth = containerWidth < 640 ? containerWidth * 0.9 : 600;
+    const canvasHeight = 400;
+
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    const placedWords = [];
+
+    function isOverlapping(x, y, w, h) {
+      return placedWords.some((item) => {
+        return (
+          x < item.x + item.w &&
+          x + w > item.x &&
+          y < item.y + item.h &&
+          y + h > item.y
+        );
+      });
+    }
 
     words.forEach((word) => {
       const fontSize = word.value * 10 + 10;
-      ctx.font = `${fontSize}px Arial`;
-      ctx.fillStyle = getRandomColor();
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
+      ctx.font = `${fontSize}px "DSFont"`;
+      const textMetrics = ctx.measureText(word.text);
+      const textWidth = textMetrics.width;
+      const textHeight = fontSize;
 
-      const x = Math.random() * width;
-      const y = Math.random() * height;
-      const angle = (Math.random() > 0.5 ? 0 : 90) * (Math.PI / 180);
+      let placed = false;
+      let attempts = 0;
+      while (!placed && attempts < 100) {
+        const x = Math.random() * (canvasWidth - textWidth - 40) + 20;
+        const y = Math.random() * (canvasHeight - textHeight - 40) + 20;
 
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(angle);
-      ctx.fillText(word.text, 0, 0);
-      ctx.restore();
+        if (!isOverlapping(x, y, textWidth, textHeight)) {
+          placedWords.push({ x, y, w: textWidth, h: textHeight });
+
+          ctx.save();
+          ctx.translate(x + textWidth / 2, y + textHeight / 2);
+          if (Math.random() > 0.5) {
+            ctx.rotate((90 * Math.PI) / 180);
+          }
+
+          ctx.fillStyle = getRandomColor();
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(word.text, 0, 0);
+          ctx.restore();
+
+          placed = true;
+        }
+
+        attempts++;
+      }
     });
   }, [words]);
 
   useEffect(() => {
     fetchWords();
+    const handleResize = () => fetchWords();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   function getRandomColor() {
@@ -166,9 +161,11 @@ export default function WordCloudSection() {
           </button>
         </form>
 
-        <div className="flex justify-center">
-          {/* <svg ref={svgRef} className="max-w-7xl" /> */}
-          <canvas ref={canvasRef} width={600} height={400} />
+        <div className="flex justify-center overflow-x-auto">
+          <canvas
+            ref={canvasRef}
+            style={{ maxWidth: "100%", height: "auto" }}
+          />
         </div>
       </div>
     </section>
