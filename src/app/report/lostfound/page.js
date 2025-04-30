@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { SearchCheck, Send, CircleCheckBig, CircleX } from "lucide-react";
 
 export default function Page() {
   const [form, setForm] = useState({
@@ -11,7 +12,7 @@ export default function Page() {
   });
 
   const [images, setImages] = useState([]);
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState({ message: "", isOk: null });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -27,17 +28,26 @@ export default function Page() {
 
     // Validate email
     if (!form.email.endsWith("@dome.tu.ac.th")) {
-      setStatus("กรุณากรอกอีเมล @dome.tu.ac.th เท่านั้น");
+      setStatus({
+        message: "กรุณากรอกอีเมล @dome.tu.ac.th เท่านั้น",
+        isOk: false,
+      });
       return;
     }
 
     if (form.phone.length !== 10) {
-      setStatus("กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก");
+      setStatus({
+        message: "กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก",
+        isOk: false,
+      });
       return;
     }
 
     if (images.length < 2) {
-      setStatus("กรุณาอัปโหลดรูปภาพอย่างน้อย 2 รูป");
+      setStatus({
+        message: "กรุณาอัปโหลดรูปภาพอย่างน้อย 2 รูป",
+        isOk: false,
+      });
       return;
     }
 
@@ -57,14 +67,20 @@ export default function Page() {
       });
 
       if (res.ok) {
-        setStatus("ส่งข้อมูลเรียบร้อยแล้ว ทางเราจะรีบติดต่อกลับโดยเร็ว");
+        setStatus({
+          message: "ส่งข้อมูลเรียบร้อยแล้ว ทางเราจะติดต่อกลับโดยเร็ว",
+          isOk: true,
+        });
         setForm({ title: "ของฉันหาย", detail: "", email: "", phone: "" });
         setImages([]);
       } else {
-        setStatus("เกิดข้อผิดพลาดในการส่งข้อมูล");
+        setStatus({ message: "เกิดข้อผิดพลาดในการส่งข้อมูล", isOk: false });
       }
     } catch (error) {
-      setStatus("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+      setStatus({
+        message: "ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้",
+        isOk: false,
+      });
     }
   };
 
@@ -73,7 +89,8 @@ export default function Page() {
       <section className="min-h-screen bg-white px-6 pt-30">
         <div className="max-w-2xl mx-auto">
           <div className="section-title mb-8">
-            <h1 className="text-gradient">ของหายได้คืน</h1>
+            <h1 className="text-gradient">Lost & Found</h1>
+            <SearchCheck size={56} />
           </div>
 
           <form onSubmit={handleSubmit} className="report-form">
@@ -157,15 +174,27 @@ export default function Page() {
               </div>
             </div>
 
-            {status && (
-              <p className="text-center text-sm font-medium text-red-600">
-                {status}
+            {status.message && (
+              <p
+                className={`report-status ${
+                  status.isOk
+                    ? "bg-green-200 text-green-600 border-green-600"
+                    : "bg-red-200 text-red-600 border-red-600"
+                }`}
+              >
+                {status.isOk ? (
+                  <CircleCheckBig size={24} />
+                ) : (
+                  <CircleX size={24} />
+                )}
+                {status.message}
               </p>
             )}
 
-            <div className="text-center">
+            <div className="flex justify-center">
               <button type="submit" className="report-button">
                 ส่งข้อมูล
+                <Send size={18} />
               </button>
             </div>
           </form>

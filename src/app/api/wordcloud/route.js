@@ -14,7 +14,7 @@ export async function POST(req) {
 
   if (isProfane(word))
     return NextResponse.json(
-      { error: "ไม่สามารถใช้คำนี้ได้!" },
+      { error: "แสดงความคิดเห็นอย่างสร้างสรรค์" },
       { status: 403 }
     );
 

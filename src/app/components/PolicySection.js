@@ -168,7 +168,7 @@ export default function PolicySection() {
             ) => (
               <div key={index} className="mb-4">
                 <h4
-                  className={`p-3 italic cursor-pointer flex items-center justify-between transition-all duration-300 ease-in-out ${
+                  className={`p-3 italic cursor-pointer flex items-center justify-between transition-all duration-300  ${
                     openIndex === index
                       ? "text-white rounded-t-2xl bg-gd "
                       : "text-primary rounded-2xl bg-white shadow-md/50"

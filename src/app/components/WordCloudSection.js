@@ -1,10 +1,20 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import {
+  MousePointerClick,
+  CircleCheckBig,
+  CircleX,
+  Loader,
+} from "lucide-react";
 
 export default function WordCloudSection() {
   const [words, setWords] = useState([]);
   const [input, setInput] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({
+    message: "",
+    isOk: null,
+    isWait: false,
+  });
   const canvasRef = useRef(null);
 
   const fetchWords = async () => {
@@ -20,7 +30,11 @@ export default function WordCloudSection() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
+    setErrorMessage({
+      message: "กำลังเพิ่มคำ... รอสักครู่",
+      isOk: null,
+      isWait: true,
+    });
 
     if (!input.trim()) return;
 
@@ -33,15 +47,24 @@ export default function WordCloudSection() {
     if (!res.ok) {
       const data = await res.json();
       if (data?.error) {
-        setErrorMessage(data?.error);
+        setErrorMessage({ message: data?.error, isOk: false, isWait: false });
       } else {
-        setErrorMessage("เกิดข้อผิดพลาด ไม่สามารถเพิ่มคำได้");
+        setErrorMessage({
+          message: "เกิดข้อผิดพลาด ไม่สามารถเพิ่มคำได้",
+          isOk: false,
+          isWait: false,
+        });
       }
       return;
     }
 
-    setInput("");
+    setErrorMessage({
+      message: "บันทึกสำเร็จ! ขอบคุณที่ร่วมแสดงความคิดเห็น",
+      isOk: true,
+      isWait: false,
+    });
     fetchWords();
+    setInput("");
   };
 
   useEffect(() => {
@@ -80,7 +103,7 @@ export default function WordCloudSection() {
 
       let placed = false;
       let attempts = 0;
-      while (!placed && attempts < 100) {
+      while (!placed && attempts < 10) {
         const x = Math.random() * (canvasWidth - textWidth - 40) + 20;
         const y = Math.random() * (canvasHeight - textHeight - 40) + 20;
 
@@ -109,9 +132,6 @@ export default function WordCloudSection() {
 
   useEffect(() => {
     fetchWords();
-    const handleResize = () => fetchWords();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   function getRandomColor() {
@@ -132,33 +152,55 @@ export default function WordCloudSection() {
         <h2 className="text-gradient">
           ขอ 1 คำ
           <br />
-          ประเด็นที่อยากให้ธรรมด้วยกันเพื่อชาวธรรมศาสตร์
+          ประเด็นที่อยากให้ธรรม(ทำ)ด้วยกัน
+          <br />
+          เพื่อชาวธรรมศาสตร์
         </h2>
 
         <form
           onSubmit={handleSubmit}
-          className="text-xl sm:text-2xl gap-2 md:gap-4 flex flex-col md:flex-row justify-center"
+          className="text-xl sm:text-2xl flex flex-col md:items-center"
         >
-          <div>
+          <div className="gap-2 md:gap-4 flex flex-col md:flex-row justify-center">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="พิมพ์คำที่คุณอยากแชร์..."
               className={`p-3 rounded-2xl border-2 w-full md:w-96 ${
-                errorMessage.length > 0 ? "border-red-600" : "border-primary"
+                errorMessage.isOk ? "border-primary" : "border-red-600"
               }`}
             />
-            {errorMessage && (
-              <p className="text-red-600 mt-2">{errorMessage}</p>
-            )}
+            <button
+              type="submit"
+              className="p-2 md:p-3 flex items-center justify-center gap-2 bg-primary text-white rounded-2xl hover:bg-orange-400 shadow-md/50 transition"
+            >
+              เพิ่มคำ
+              <MousePointerClick size={24} />
+            </button>
           </div>
-          <button
-            type="submit"
-            className="p-1 md:p-3 bg-primary text-white rounded-2xl hover:bg-orange-400 shadow-md/50 transition"
-          >
-            เพิ่มคำ
-          </button>
+          {errorMessage.message && (
+            <p
+              className={`report-status mt-3 ${
+                errorMessage.isOk &&
+                "bg-green-200 text-green-600 border-green-600"
+              } ${
+                errorMessage.isOk === false &&
+                "bg-red-200 text-red-600 border-red-600"
+              }
+                ${
+                  errorMessage.isWait &&
+                  "bg-yellow-200 text-yellow-600 border-yellow-600"
+                }
+                  
+              }`}
+            >
+              {errorMessage.isOk && <CircleCheckBig size={24} />}
+              {errorMessage.isOk === false && <CircleX size={24} />}
+              {errorMessage.isWait && <Loader size={24} />}
+              {errorMessage.message}
+            </p>
+          )}
         </form>
 
         <div className="flex justify-center overflow-x-auto">

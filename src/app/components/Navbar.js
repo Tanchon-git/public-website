@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 
 const navItems = [
@@ -14,7 +14,7 @@ const navItems = [
     name: "ร้องเรียนปัญหา",
     dropdown: [
       { name: "ทั่วไป", href: "/report/general" },
-      { name: "ขนส่งภายใน", href: "/report/transport" },
+      { name: "การขนส่งภายใน", href: "/report/transport" },
       { name: "Lost and Found", href: "/report/lostfound" },
     ],
   },
@@ -44,7 +44,10 @@ export default function Navbar() {
                 key={item.name}
                 className="relative group text-white text-2xl cursor-pointer"
               >
-                {item.name}
+                <div className="flex items-center">
+                  {item.name}
+                  <ChevronDown size={24} />
+                </div>
                 <div className="absolute bg-white divide-y-1 divide-zinc-200 top-full hidden group-hover:block group-hover:pointer-events-auto z-50">
                   <ul className="">
                     {item.dropdown.map((sub) => (
@@ -89,7 +92,6 @@ export default function Navbar() {
         }`}
       >
         <ul className="space-y-2 divide-y-1 divide-gd-yellow ">
-          {/* TODO: Add animation open */}
           {navItems.map((item) =>
             item.dropdown ? (
               <li key={item.name}>
@@ -97,8 +99,14 @@ export default function Navbar() {
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   className="text-2xl text-primary font-bold block pb-2 cursor-pointer"
                 >
-                  {/* TODO: Add down arrow icon */}
-                  {item.name}
+                  <div className="flex items-center">
+                    {item.name}
+                    {dropdownOpen ? (
+                      <ChevronUp size={24} />
+                    ) : (
+                      <ChevronDown size={24} />
+                    )}
+                  </div>
                 </button>
                 {dropdownOpen && (
                   <ul className="pl-4 space-y-3 divide-y-1 divide-gd-yellow">
