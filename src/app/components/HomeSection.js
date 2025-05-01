@@ -46,15 +46,15 @@ export default function HomeSection() {
           </div>
         </div>
 
-        <div className="mb-4">
-          <h2 className="mb-2 text-gradient">
+        <div className="px-4 mb-4">
+          <h3 className="mb-2 text-gradient">
             พวกเราพรรคธรรมด้วยกัน
             <br />
             ขอขอบคุณประชาคมธรรมศาสตร์ทุกท่านที่ออกมาใช้สิทธิ์ของตน
-          </h2>
+          </h3>
 
-          <h3 className="mb-2 text-white bg-gd rounded-2xl">
-            และขอขอบคุณทุกคะแนนเสียงที่เลือกเราในครั้งนี้
+          <p className="py-4 mb-2 text-white bg-gd rounded-2xl">
+            และขอขอบคุณทุกคะแนนเสียงที่เลือกเรา
             <br />
             <span className="underline underline-offset-4">
               พวกเราในฐานะองค์การนักศึกษามหาวิทยาลัยธรรมศาสตร์ ปีการศึกษา 2568
@@ -64,7 +64,7 @@ export default function HomeSection() {
             <br />
             และจะเป็นกระบอกเสียงของนักศึกษา
             เพื่อเปลี่ยนแปลงมหาวิทยาลัยธรรมศาสตร์ให้ดียิ่งขึ้น
-          </h3>
+          </p>
 
           <div className="flex items-center justify-center text-zinc-500 underline underline-offset-4">
             <a
@@ -72,7 +72,7 @@ export default function HomeSection() {
               href="https://www.instagram.com/ectu_2025/"
               className="text-2xl"
             >
-              ประกาศผลการเลือกตั้งอย่างเป็นทางการ
+              ติดตามประกาศผลการเลือกตั้งอย่างเป็นทางการ
             </a>
             <MousePointerClick size={24} />
           </div>
