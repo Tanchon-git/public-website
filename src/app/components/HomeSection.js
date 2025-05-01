@@ -2,6 +2,7 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
+import { MousePointerClick } from "lucide-react";
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -42,6 +43,38 @@ export default function HomeSection() {
               เปลี่ยนธรรมศาสตร์ไปด้วยกัน&quot;
             </p>
             <h1 className="text-gradient">พรรคธรรมด้วยกัน</h1>
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <h2 className="mb-2 text-gradient">
+            พวกเราพรรคธรรมด้วยกัน
+            <br />
+            ขอขอบคุณประชาคมธรรมศาสตร์ทุกท่านที่ออกมาใช้สิทธิ์ของตน
+          </h2>
+
+          <h3 className="mb-2 text-white bg-gd rounded-2xl">
+            และขอขอบคุณทุกคะแนนเสียงที่เลือกเราในครั้งนี้
+            <br />
+            <span className="underline underline-offset-4">
+              พวกเราในฐานะองค์การนักศึกษามหาวิทยาลัยธรรมศาสตร์ ปีการศึกษา 2568
+            </span>
+            <br />
+            ขอยืนยันว่าจะดำเนินการนโยบายที่เป็นประโยชน์แก่ประชาคมธรรมศาสตร์
+            <br />
+            และจะเป็นกระบอกเสียงของนักศึกษา
+            เพื่อเปลี่ยนแปลงมหาวิทยาลัยธรรมศาสตร์ให้ดียิ่งขึ้น
+          </h3>
+
+          <div className="flex items-center justify-center text-zinc-500 underline underline-offset-4">
+            <a
+              target="_blank"
+              href="https://www.instagram.com/ectu_2025/"
+              className="text-2xl"
+            >
+              ประกาศผลการเลือกตั้งอย่างเป็นทางการ
+            </a>
+            <MousePointerClick size={24} />
           </div>
         </div>
 
