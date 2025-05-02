@@ -54,9 +54,7 @@ export const metadata = {
   description: "เว็บไซต์พรรคธรรมด้วยกัน มหาวิทยาลัยธรรมศาสตร์",
   icons: {
     icon: "/favicon.ico",
-    // apple: '/apple-touch-icon.png', // ถ้าต้องการ Apple Touch Icon
   },
-  // manifest: '/manifest.json', // ถ้าต้องการ Web App Manifest
 };
 
 export default function RootLayout({ children }) {

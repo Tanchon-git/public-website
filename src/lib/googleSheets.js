@@ -68,7 +68,7 @@ export async function saveGeneralReport({ title, detail, email, phone }) {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: sheetId,
-    range: "general report!A:D", // ตรวจสอบให้ชื่อ Sheet ภายใน Google Sheet ตรงกับนี้
+    range: "general report!A:D",
     valueInputOption: "USER_ENTERED",
     insertDataOption: "INSERT_ROWS",
     requestBody: {
@@ -88,7 +88,7 @@ export async function saveTransportReport({
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: sheetId,
-    range: "transport report!A:D", // ตรวจสอบให้ชื่อ Sheet ภายใน Google Sheet ตรงกับนี้
+    range: "transport report!A:D",
     valueInputOption: "USER_ENTERED",
     insertDataOption: "INSERT_ROWS",
     requestBody: {
@@ -110,7 +110,7 @@ export async function saveLostfoundReport({
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: sheetId,
-    range: "lostfound report!A:D", // ตรวจสอบให้ชื่อ Sheet ภายใน Google Sheet ตรงกับนี้
+    range: "lostfound report!A:D",
     valueInputOption: "USER_ENTERED",
     insertDataOption: "INSERT_ROWS",
     requestBody: {

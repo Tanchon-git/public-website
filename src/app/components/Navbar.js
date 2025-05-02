@@ -36,7 +36,6 @@ export default function Navbar() {
         />
 
         {/* Desktop Menu */}
-        {/* TODO: Animation open hover */}
         <ul className="hidden md:flex space-x-12 items-center font-bold">
           {navItems.map((item) =>
             item.dropdown ? (
@@ -112,7 +111,6 @@ export default function Navbar() {
                   <ul className="pl-4 space-y-3 divide-y-1 divide-gd-yellow">
                     {item.dropdown.map((sub) => (
                       <li key={sub.href}>
-                        {/* TODO: Add dot icon */}
                         <a
                           href={sub.href}
                           className="text-2xl/4 text-primary block pb-3"

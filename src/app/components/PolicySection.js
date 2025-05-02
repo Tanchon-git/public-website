@@ -164,7 +164,7 @@ export default function PolicySection() {
           {policies.map(
             (
               policy,
-              index //#FIXME: Error animation in IOS
+              index //FIXME: Error animation in IOS
             ) => (
               <div key={index} className="mb-4">
                 <h4

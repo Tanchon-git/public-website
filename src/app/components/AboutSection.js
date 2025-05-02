@@ -41,14 +41,6 @@ export default function AboutSection() {
             </div>
           ))}
         </div>
-        {/*TODO: edit hyperlink*/}
-        {/* <a
-          target="_blank"
-          href="https://www.instagram.com/unitedtu.party?igsh=MXl4eG1kenFoYW14"
-          className="text-primary text-2xl font-bold p-3 bg-white rounded-2xl shadow-md/50"
-        >
-          ร่วมเป็น Supporter พรรคธรรมด้วยกัน
-        </a> */}
       </div>
     </section>
   );

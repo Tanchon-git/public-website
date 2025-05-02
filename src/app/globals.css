@@ -31,7 +31,7 @@
   --font-pg: var(--font-pg);
 }
 
-/*TODO: Make theme sync with OS Later zzz
+/*TODO: Make theme sync with OS
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -113,13 +113,13 @@ p {
 }
 
 .fc-button {
-  background-color: #FC6A03 !important; /* สีปุ่ม Prev, Next, Today */
+  background-color: #FC6A03 !important;
   border: none !important;
   transition: background-color 0.3s ease;
 }
 
 .fc-button:hover {
-  background-color: #FF8C42 !important; /* สี hover ปุ่ม */
+  background-color: #FF8C42 !important;
 }
 
 .fc-event {
@@ -133,7 +133,7 @@ p {
 }
 
 .fc-daygrid-day-number {
-  color: #333; /* ตัวเลขวันที่ */
+  color: #333;
 }
 
 .card-event-title {

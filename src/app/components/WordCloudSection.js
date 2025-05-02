@@ -136,12 +136,12 @@ export default function WordCloudSection() {
 
   function getRandomColor() {
     const colors = [
-      "#F97316", // orange
-      "#2563EB", // blue
-      "#10B981", // green
-      "#9333EA", // purple
-      "#EF4444", // red
-      "#0EA5E9", // sky blue
+      "#F97316",
+      "#2563EB",
+      "#10B981",
+      "#9333EA",
+      "#EF4444",
+      "#0EA5E9",
     ];
     return colors[Math.floor(Math.random() * colors.length)];
   }
