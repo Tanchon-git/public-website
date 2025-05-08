@@ -43,11 +43,11 @@ export default function Navbar() {
                 key={item.name}
                 className="relative group text-white text-2xl cursor-pointer"
               >
-                <div className="flex items-center">
+                <div className="flex items-center" onClick={() => setDropdownOpen(!dropdownOpen)}>
                   {item.name}
                   <ChevronDown size={24} />
                 </div>
-                <div className="absolute bg-white divide-y-1 divide-zinc-200 top-full hidden group-hover:block group-hover:pointer-events-auto z-50">
+                <div className={`absolute bg-white divide-y-1 divide-zinc-200 top-full ${!dropdownOpen && "hidden"} group-hover:block group-hover:pointer-events-auto z-50`}>
                   <ul className="">
                     {item.dropdown.map((sub) => (
                       <li key={sub.href}>
